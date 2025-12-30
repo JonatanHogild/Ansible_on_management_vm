@@ -76,7 +76,7 @@ Also download *sshpass*, which allows ssh password authoirzation via Ansible.
 └── roles/  <br>
     └── common/  <br>
 
-This is one suggested directory structure, placed in /opt. For a lab, it would suffice to create a single ansible folder placed in your home directory. 
+This is a suggested directory structure, placed in /opt. For a lab, it would suffice to create a single ansible folder placed in your home directory. 
 
 #### 3.2.2. Set the correct permissions for the directories and files <br>
 
@@ -91,10 +91,10 @@ Confirm: `ls -l /opt`
 
 `ls -l /opt/ansible`
 
-*-rw-rw-r--. root wheel ansible.cfg
-drwxrwsr-x. root wheel inventory
-drwxrwsr-x. root wheel playbooks
-drwxrwsr-x. root wheel roles*
+*-rw-rw-r--. root wheel ansible.cfg <br>
+drwxrwsr-x. root wheel inventory <br>
+drwxrwsr-x. root wheel playbooks <br>
+drwxrwsr-x. root wheel roles* <br>
 
 Add user to wheel (if this isn't done already): `sudo usermod -aG wheel username`
 
@@ -106,31 +106,33 @@ The inventory contains all the hosts that Ansible will manage. For now, I will k
 
 #### 3.3.1 **hosts.ini** <br>
 
-A hosts-file can either use .ini or .yml format, use whichever you prefer. I used the .ini format.
+A hosts-file can either use the .ini or .yml format, use whichever you prefer. I used the .ini format.
 
 Edit the /inventory/hosts.ini file: <br>
 
 ```ini
 [rocky]
+localhost ansible_connection=local
 metrics-01 ansible_host=10.208.12.102
 app-01 ansible_host=10.208.12.103
-localhost ansible_connection=local
 
 [management]
 localhost ansible_connection=local
 
 [metrics]
-metrics-01 ansible_host=10.208.12.103
+metrics-01 ansible_host=10.208.12.102
 
 [application]
-app-01 ansible_host=10.208.12.102
+app-01 ansible_host=10.208.12.103
 ```
 
-Localhost is also included, with its connection type specified as local. Changes made on other VMs can then also be applied locally on this system. Hosts have also been grouped into different categories, as shown here.
+Localhost is included, with its connection type specified as local. Changes made on other VMs can then also be applied locally on this system. 
+
+Hosts have also been grouped into different categories, as shown. 
 
 #### 3.3.2 Verify inventory and hosts
 
-`ansible-inventory --graph` can be used to show the current inventory.
+`ansible-inventory --graph` can be used to show the current inventory. 
 
 Use `ansible all -m ping` to confirm connectivity.
 
@@ -180,8 +182,7 @@ I want to change *config file = /etc/ansible/ansible.cfg* to *config file = /opt
 
 This can be done by changing the environment variable: `export ANSIBLE_CONFIG=/opt/ansible/ansible.cfg`
 
-Make it permanent by adding the command to a profile script: `sudo vi /etc/profile.d/ansible.sh`
-
+Make it permanent by adding the command to a new profile script: `sudo vi /etc/profile.d/ansible.sh`
 
 #### 3.5.2 **Write an ansible.cfg file** <br>
 
