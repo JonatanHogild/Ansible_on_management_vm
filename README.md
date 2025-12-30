@@ -1,14 +1,13 @@
-# Title Page
+# Ansible on management VM
 <img width="100" alt="MyLogo" src="https://github.com/rafaelurrutiasilva/images/blob/main/logos/MyLogo_2.png" align=left><br>
 <br>
-Titel på dokumentet<br>
-Författare<br>
-Publiceringsdatum<br>
+Jonatan Högild<br>
+30-12-2025<br>
 
 <br>
 
 ## Abstract
-Kort sammanfattning av dokumentet
+Preparing Ansible for management of a virtual IT-environment. 
 
 ## Table of Contents
 
@@ -25,7 +24,7 @@ Kort sammanfattning av dokumentet
 11. [Conclusion](#conclusion)
 
 ## Introduction
-This is the third project <a href="https://github.com/rafaelurrutiasilva/Proxmox_on_Nuc/blob/main/Extra/Mermaid/Projects.md">in a series of projects</a>, with the goal of setting up a complete virtualized, automated, and monitored IT-Enviroment as a part of our internship at [The Swedish Meteorological and Hydrological Institute (SMHI)](https://www.smhi.se/en/about-smhi). Previously, <a href=https://github.com/rafaelurrutiasilva/Proxmox_on_Nuc>Proxmox was installed and configured</a> on a server, and a <a href=https://github.com/Filipanderssondev/Rocky_Linux_OS_Base_for_VMs>Rocky Linux golden image</a> was created for cloning. At this stage in the project, we have 3 VMs, one for management of the environment, one for monitoring, and one for running applications. In this project, I will begin work on the management VM using Ansible, an automation IaC platform. 
+This is the third project <a href="https://github.com/rafaelurrutiasilva/Proxmox_on_Nuc/blob/main/Extra/Mermaid/Projects.md">in a series of projects</a>, with the goal of setting up a complete virtualized, automated, and monitored IT-Enviroment as a part of our internship at [The Swedish Meteorological and Hydrological Institute (SMHI)](https://www.smhi.se/en/about-smhi). Previously, <a href=https://github.com/rafaelurrutiasilva/Proxmox_on_Nuc>Proxmox was installed and configured</a> on a server, and a <a href=https://github.com/Filipanderssondev/Rocky_Linux_OS_Base_for_VMs>Rocky Linux golden image</a> was created for cloning. At this stage in the project, we have 3 VMs, one for management of the environment, one for monitoring, and one for running applications. In this project, I will begin work on the management VM by setting up Ansible, an automation IaC platform. 
 
 ## Goals and Objectives
 This is part of a larger ongoing Infrastructure as Code (IaC) project that will use Proxmox as a base, with Rocky Linux as the OS running on each virtual machine.
@@ -225,28 +224,44 @@ Restart sshd after making changes: `sudo systemctl restart sshd` <br>
 Verify connections with: `ansible all -m ping`
 
 ## Target Audience
-Målgrupp
+This repo is for anyone who wants a step-by-step guide on preparing Ansible for management.
+This repo is also part of a larger project aimed at people interested in learning about IaC, and building such an environment from scratch. 
 
 ## Document Status
-Dokumentstatus (om det finns relevant information om dokumentets status, till exempel utkast, slutfört, etc.). Tex:
 > [!NOTE]  
-> My work here is not finished yet. I need, among other things, to supplement with instructions on how each component should be configured to work together as well supplement with an overview image that explains how the whole thing works.
-
+> This is a work in progress.<br>
+> This repo is part of a larger ongoing project.
+<br>
 
 ## Disclaimer
-Ansvarsfriskrivning. Tex:
 > [!CAUTION]
 > This is intended for learning, testing, and experimentation. The emphasis is not on security or creating an operational environment suitable for production.
+<br>
 
 ## Scope and Limitations
-Omfattning och begränsningar
+- ### 7.1. Scope
+   * Instructions for installing and configuring Rocky Linux as a golden image.
+   * Instructions for how to work within Proxmox VE (9.1.1), create and manage VMs. 
+
+- ### 7.2. Limitations
+   * This guide is not intended for production-grade, multi-node clusters or advanced HA setups.
+   * Hardware compatibility varies; If unsure, check <a href=https://docs.rockylinux.org/10/guides/minimum_hardware_requirements>hardware requirements</a> before proceeding. 
+   * Network configuration is for now limited to a single-node setup and may not apply to complex environments.
+   * Instructions may become outdated as software updates; always verify with the official documentation.
+<br>
 
 ## Environment
-Miljö som användes
+- ### 8.1. Hardware
+   - Asus PN64 ax210NGW
+
+- ### 8.2. Software
+   - Proxmox VE (9.1.1)
+   - Rocky Linux
+   - Ansible
+<br>
 
 ## Acknowledgments
-Tack och erkännanden. Tex:
-Big thanks to all the people involved in the material I refer to in my links! I would also like to express gratitude to everyone out there, including my colleagues and friends, who are creating things that help and inspire us to continue learning and exploring this never-ending world of computer technology.
+I would like to thank <a href=https://github.com/rafaelurrutiasilva>Rafael Urrutia</a> for his continuous support and guidance.
 
 ## References
 Referenser (om det behövs)
