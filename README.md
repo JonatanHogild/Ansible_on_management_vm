@@ -43,7 +43,7 @@ On Rocky Linux, different Ansible-related packages can be found in both Appstrea
 
 Open epel.repo: `sudo vi /etc/yum.repos.d/epel.repo` <br>
 
-Replace baseurl with `mirrors.nsc.liu.se/fedora-epel/$releasever${releasever_minor:+-z}/Everything/$basearch/`
+Replace baseurl with `mirror.nsc.liu.se/fedora-epel/$releasever${releasever_minor:+-z}/Everything/$basearch/`
 
 If enabled=0, set to 1. Save and exit. 
 
