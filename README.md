@@ -37,11 +37,11 @@ This is the third project <a href="https://github.com/rafaelurrutiasilva/Proxmox
 This is part of a larger ongoing Infrastructure as Code (IaC) project that will use Proxmox as a base, with Rocky Linux as the OS running on each virtual machine.
 The goal of this project is to build a complete IT-environment and gain a deeper understanding of the underlying components and their part in a larger production chain.
 
-With Ansible, we can automate installation and deployment, orchestration and configuration. The goal of this project is to set up Ansible in a scalable and secure way. Ansible will handle the bulk of management in our environment. This should work as efficiently iregardless of the amount of hosts. 
+With Ansible, we can automate just about anything. The goal of this project is to set up Ansible in a scalable and secure way. Ansible will handle the bulk of management in our environment and it should work as efficiently iregardless of the amount of hosts. 
 
 ## Method
 ### 3.1. Download Ansible
-
+<!--
 #### 3.1.1. **Prepare repos** <br>
 
 Go into the Managament VM (mgmt-01). This is where Ansible will be installed.
@@ -54,15 +54,13 @@ Replace baseurl with `mirror.nsc.liu.se/fedora-epel/$releasever${releasever_mino
 
 If enabled=0, set to 1. Save and exit. 
 
-#### 3.1.2 **Download Ansible and other packages** <br>
+#### 3.1.2 **Download Ansible and other packages** <br> 
+
+Use `dnf search ansible` to view the available Ansible packages. -->
 
 Run `sudo dnf update`
 
-Use `dnf search ansible` to view the available Ansible packages. 
-
-Install Ansible Core: `sudo dnf install ansible-core-1:2.16.14-1.el10.noarch`
-
-Aside from Ansible Core, some of the collections may be of interest. The Community collection contains a large number of modules. The Posix collection and the Podman Containers collection may also prove useful further on. 
+Install Ansible Core: `sudo dnf install ansible-core`
 
 Verify installation with: `ansible --version`
 
@@ -114,7 +112,7 @@ The inventory contains all the hosts that Ansible will manage. For now, I will k
 
 A hosts-file can either use the .ini or .yml format, use whichever you prefer. I used the .ini format.
 
-Edit the /inventory/hosts.ini file: <br>
+Edit the */inventory/hosts.ini* file: <br>
 
 ```ini
 [rocky]
@@ -244,11 +242,11 @@ In the Proxmox web UI, go into Datacenter > Firewall > IPSet
 Create a new IPSet, call it something like *mgmt* (the name *management* is reserved by a <a href=https://pve.proxmox.com/pve-docs/chapter-pve-firewall.html#_standard_ip_set_span_class_monospaced_management_span>predefined standard IP set</a>, and should not be used here). 
 
 Add the IP-address of *mgmt-01*
-You may also want to add the address of your physical machine. 
+You may also want to add the address of your physical machine(s). 
 
 Next, go to Datacenter > Firewall > Security Group > *allow-ssh* <br>
 Here are the two SSH rules created in the previous project. <br>
-Edit each of these, and add the *management* IP set as source. <br>
+Edit each of these, and set *mgmt* as source. <br>
 
 
 ## Target Audience
@@ -268,12 +266,11 @@ This repo is also part of a larger project aimed at people interested in learnin
 
 ## Scope and Limitations
 - ### 7.1. Scope
-   * Instructions for installing and configuring Rocky Linux as a golden image.
-   * Instructions for how to work within Proxmox VE (9.1.1), create and manage VMs. 
+   * Instructions for installing and configuring Ansible for an enterprise environment. 
+   * Instructions for creating Ansible inventories and playbooks.
 
 - ### 7.2. Limitations
    * This guide is not intended for production-grade, multi-node clusters or advanced HA setups.
-   * Hardware compatibility varies; If unsure, check <a href=https://docs.rockylinux.org/10/guides/minimum_hardware_requirements>hardware requirements</a> before proceeding. 
    * Network configuration is for now limited to a single-node setup and may not apply to complex environments.
    * Instructions may become outdated as software updates; always verify with the official documentation.
 <br>
@@ -284,15 +281,20 @@ This repo is also part of a larger project aimed at people interested in learnin
 
 - ### 8.2. Software
    - Proxmox VE (9.1.1)
-   - Rocky Linux
-   - Ansible
+   - Rocky Linux (10.1)
+   - Ansible (core 2.16.14)
 <br>
 
 ## Acknowledgments
-I would like to thank <a href=https://github.com/rafaelurrutiasilva>Rafael Urrutia</a> for his continuous support and guidance.
+I would like to thank <a href=https://github.com/rafaelurrutiasilva>Rafael Urrutia</a> for his continuous support and guidance. 
 
 ## References
-Referenser (om det behövs)
+- [SMHI](https://www.smhi.se/en/about-smhi)
+- [Project 1: Installing Proxmox on an Asus PN64](https://github.com/rafaelurrutiasilva/Proxmox_on_Nuc)
+- [Project 2: Rocky Linux Golden Image](https://github.com/Filipanderssondev/Rocky_Linux_OS_Base_for_VMs)
+- [Ansible builtin dnf module](https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/dnf_module.html)
+- [Proxmox firewall standard ip sets](https://pve.proxmox.com/pve-docs/chapter-pve-firewall.html#_standard_ip_set_span_class_monospaced_management_span)
 
 ## Conclusion
-Slutsats
+Previously, I've been using scripting as a means of automation, with languages such as Bash, Python and Perl. Ansible has given me a new perspective on automation, while also being fairly easy to learn. Though this project only scratches the surface of Ansible and its capabilities, it shows how automation can be applied in complex enterprise environments, and the benefits of infrastructure as code. 
+
