@@ -18,9 +18,9 @@ Preparing Ansible for management of a virtual IT-environment.
    3.2 [Ansible directory structure](#32-ansible-directory-structure) <br>
    3.3 [Inventory](#33-inventory) <br>
    3.4 [Playbooks](#34-playbooks) <br>
-   3.5 [ansible.cfg](#35-ansible.cfg) <br>
+   3.5 [ansible.cfg](#35-ansiblecfg) <br>
    3.6 [SSH Keys](#36-ssh-keys) <br>
-   3.7 [Restricting SSH communication](#36-restricting-ssh-communication) <br>
+   3.7 [Restricting SSH communication](#37-restricting-ssh-communication) <br>
 4. [Target Audience](#target-audience)
 5. [Document Status](#document-status)
 6. [Disclaimer](#disclaimer)
