@@ -80,14 +80,14 @@ Also download *sshpass*, which allows ssh password authoirzation via Ansible.
 └── roles/  <br>
     └── common/  <br>
 
-This is a suggested directory structure, placed in /opt. For a lab, it would suffice to create a single ansible folder placed in your home directory. 
+This is a suggested directory structure, placed in */opt*. For a lab, it would suffice to create a single ansible folder placed in your home directory. 
 
 #### 3.2.2. Set correct permissions for the directories and files <br>
 
 Change the group ownership to wheel: `sudo chown -R root:wheel /opt/ansible`
 
 Give group write access: `sudo chmod -R g+rw /opt/ansible`
-Make new files inherit the wheel group: sudo find /opt/ansible -type d -exec chmod g+s {} \;
+Make new files inherit the wheel group: `sudo find /opt/ansible -type d -exec chmod g+s {} \;`
 
 Confirm: `ls -l /opt`
 
