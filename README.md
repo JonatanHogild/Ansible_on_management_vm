@@ -13,7 +13,14 @@ Preparing Ansible for management of a virtual IT-environment.
 
 1. [Introduction](#introduction)
 2. [Goals and Objectives](#goals-and-objectives)
-3. [Method](#method)
+3. [Method](#method) <br>
+   3.1 [Download Ansible](#31-download-ansible) <br>
+   3.2 [Ansible directory structure](#32-ansible-directory-structure) <br>
+   3.3 [Inventory](#33-inventory) <br>
+   3.4 [Playbooks](#34-playbooks) <br>
+   3.5 [ansible.cfg](#35-ansible.cfg) <br>
+   3.6 [SSH Keys](#36-ssh-keys) <br>
+   3.7 [Restricting SSH communication](#36-restricting-ssh-communication) <br>
 4. [Target Audience](#target-audience)
 5. [Document Status](#document-status)
 6. [Disclaimer](#disclaimer)
@@ -77,7 +84,7 @@ Also download *sshpass*, which allows ssh password authoirzation via Ansible.
 
 This is a suggested directory structure, placed in /opt. For a lab, it would suffice to create a single ansible folder placed in your home directory. 
 
-#### 3.2.2. Set the correct permissions for the directories and files <br>
+#### 3.2.2. Set correct permissions for the directories and files <br>
 
 Change the group ownership to wheel: `sudo chown -R root:wheel /opt/ansible`
 
@@ -136,11 +143,12 @@ Hosts have also been grouped into different categories, as shown.
 Use `ansible all -m ping` to confirm connectivity.
 
 ### 3.4 Playbooks
+Playbooks are structured instruction files written in YAML that tell Ansible which hosts to target and what tasks to perform on them.
 For the very first playbook, I'll begin with something simple, the Ansible equivelent of *sudo dnf update*.
 
 #### 3.4.1 **Create a playbook** <br>
 
-`vi /opt/ansible/playbooks/dnf_update.yml`
+Create a new file in the *playbooks* directory and edit it: `vi /opt/ansible/playbooks/dnf_update.yml`
 
 ```yaml
 ---
@@ -223,9 +231,29 @@ Restart sshd after making changes: `sudo systemctl restart sshd` <br>
 
 Verify connections with: `ansible all -m ping`
 
+### 3.7 Restricting SSH communication
+
+The *mgmt-01* VM should be able to access the other VMs via SSH. This fits the role of the management VM, it should be able to manage other hosts remotely. It is also necessary for Ansible to function. However, we want to restrict SSH communication for the other VMs. For example, *app-01* shouldn't be able to SSH into *mgmt-01*. 
+
+#### 3.7.1 Change firewall rules
+
+The Proxmox firewall allows SSH communication between all VMs. This is what we will change.
+
+In the Proxmox web UI, go into Datacenter > Firewall > IPSet
+
+Create a new IPSet, call it something like *mgmt* (the name *management* is reserved by a <a href=https://pve.proxmox.com/pve-docs/chapter-pve-firewall.html#_standard_ip_set_span_class_monospaced_management_span>predefined standard IP set</a>, and should not be used here). 
+
+Add the IP-address of *mgmt-01*
+You may also want to add the address of your physical machine. 
+
+Next, go to Datacenter > Firewall > Security Group > *allow-ssh* <br>
+Here are the two SSH rules created in the previous project. <br>
+Edit each of these, and add the *management* IP set as source. <br>
+
+
 ## Target Audience
-This repo is for anyone who wants a step-by-step guide on preparing Ansible for management.
-This repo is also part of a larger project aimed at people interested in learning about IaC, and building such an environment from scratch. 
+This repo is for anyone who wants a step-by-step guide on preparing Ansible for management of multiple hosts.
+This repo is also part of a larger project aimed at people interested in learning about IaC, and building such an environment from scratch.
 
 ## Document Status
 > [!NOTE]  
