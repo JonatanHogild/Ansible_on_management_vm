@@ -245,7 +245,7 @@ In the Proxmox web UI, go into Datacenter > Firewall > IPSet
 
 Create a new IPSet, call it something like *mgmt* (the name *management* is reserved by a <a href=https://pve.proxmox.com/pve-docs/chapter-pve-firewall.html#_standard_ip_set_span_class_monospaced_management_span>standard IP set</a>, and should not be used here). 
 
-Add the IP-address of *mgmt-01*
+Add the IP-address of *mgmt-01*. <br>
 You may also want to add the address of your physical machine(s). 
 
 Next, go to Datacenter > Firewall > Security Group > *allow-ssh* <br>
