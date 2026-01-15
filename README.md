@@ -221,7 +221,8 @@ Ansible uses SSH to communicate, and SSH-keys will make this communication easie
 
 To generate new SSH keys, use: `ssh-keygen`
 
-Then copy the public key to the other VMs: `scp /home/username/.ssh/id_ed25519.pub username@hostname:/home/username/.ssh/`
+Then copy the public key to the other VMs: `ssh-copy-id -i ~/.ssh/id_ed25519.pub rusername@hostname` <br>
+`scp /home/username/.ssh/id_ed25519.pub username@hostname:/home/username/.ssh/`
 
 #### 3.6.2 **Change SSHD settings** <br>
 
@@ -243,10 +244,10 @@ The Proxmox firewall allows SSH communication between all VMs. This is what we w
 
 In the Proxmox web UI, go into Datacenter > Firewall > IPSet
 
-Create a new IPSet, call it something like *mgmt* (the name *management* is reserved by a <a href=https://pve.proxmox.com/pve-docs/chapter-pve-firewall.html#_standard_ip_set_span_class_monospaced_management_span>standard IP set</a>, and should not be used here). 
+Create a new IPSet, call it something like *mgmt* (the name *management* is reserved by a <a href=https://pve.proxmox.com/pve-docs/chapter-pve-firewall.html#_standard_ip_set_span_class_monospaced_management_span>standard IP set</a>, and should not be used here).
 
 Add the IP-address of *mgmt-01*. <br>
-You may also want to add the address of your physical machine(s). 
+You may also want to add the address of your physical machine(s).
 
 Next, go to Datacenter > Firewall > Security Group > *allow-ssh* <br>
 Here are the two SSH rules created in the previous project. <br>
@@ -290,7 +291,7 @@ This repo is also part of a larger project aimed at people interested in learnin
 <br>
 
 ## Acknowledgments
-I would like to thank <a href=https://github.com/rafaelurrutiasilva>Rafael Urrutia</a> for his continuous support and guidance. 
+We would like to thank <a href=https://github.com/rafaelurrutiasilva>Rafael Urrutia</a> for his continuous support and guidance. 
 
 ## References
 - [SMHI](https://www.smhi.se/en/about-smhi)
