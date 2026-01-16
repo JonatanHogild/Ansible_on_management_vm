@@ -11,7 +11,7 @@
 <br>
 
 ## Abstract
-Setting up Ansible on a management VM to to manage other vms in our virtual IT-environment. 
+Setting up Ansible on a management VM to manage other VMs in a virtual IT-environment. 
 
 ## Table of Contents
 
@@ -45,30 +45,28 @@ With Ansible, we can automate just about anything. The goal of this project is t
 
 ## Method
 ### 3.1. Download Ansible
-<!--
-#### 3.1.1. **Prepare repos** <br>
 
-Go into the Managament VM (mgmt-01). This is where Ansible will be installed.
- 
-On Rocky Linux, different Ansible-related packages can be found in both Appstream and Extra Packages for Enterprise Linux (EPEL) repos. 
+#### 3.1.1 **Download Ansible and other packages** <br> 
 
-Open epel.repo: `sudo vi /etc/yum.repos.d/epel.repo` <br>
+Run a quick update before proceeding:
+```
+sudo dnf update
+```
 
-Replace baseurl with `mirror.nsc.liu.se/fedora-epel/$releasever${releasever_minor:+-z}/Everything/$basearch/`
+Install Ansible Core: 
+```
+sudo dnf install ansible-core
+```
 
-If enabled=0, set to 1. Save and exit. 
+Verify installation with: 
+```
+ansible --version
+```
 
-#### 3.1.2 **Download Ansible and other packages** <br> 
-
-Use `dnf search ansible` to view the available Ansible packages. -->
-
-Run `sudo dnf update`
-
-Install Ansible Core: `sudo dnf install ansible-core`
-
-Verify installation with: `ansible --version`
-
-Also download *sshpass*, which allows ssh password authoirzation via Ansible. 
+Also download *sshpass*, which allows ssh password authoirzation via Ansible:
+```
+sudo dnf install sshpass
+```
 
 ### 3.2 Ansible directory structure
 
@@ -88,25 +86,45 @@ This is a suggested directory structure, placed in */opt*. For a lab, it would s
 
 #### 3.2.2. Set correct permissions for the directories and files <br>
 
-Change the group ownership to wheel: `sudo chown -R root:wheel /opt/ansible`
+Change the group ownership to wheel: 
+```
+sudo chown -R root:wheel /opt/ansible
+```
 
-Give group write access: `sudo chmod -R g+rw /opt/ansible`
-Make new files inherit the wheel group: `sudo find /opt/ansible -type d -exec chmod g+s {} \;`
+Give group write access: 
+```
+sudo chmod -R g+rw /opt/ansible
+```
+Make new files inherit the wheel group: 
+```
+sudo find /opt/ansible -type d -exec chmod g+s {} \;
+```
 
-Confirm: `ls -l /opt`
+Confirm: 
+```
+ls -l /opt
+```
 
 *drwxrwsr-x. root wheel ansible*
 
-`ls -l /opt/ansible`
+```
+ls -l /opt/ansible
+```
 
 *-rw-rw-r--. root wheel ansible.cfg <br>
 drwxrwsr-x. root wheel inventory <br>
 drwxrwsr-x. root wheel playbooks <br>
 drwxrwsr-x. root wheel roles* <br>
 
-Add user to wheel (if this isn't done already): `sudo usermod -aG wheel username`
+Add user to wheel (if this isn't done already): 
+```
+sudo usermod -aG wheel username
+```
 
-Confirm: `cat /etc/group | grep username`
+Confirm: 
+```
+cat /etc/group | grep username
+```
 
 ### 3.3 Inventory
 
@@ -140,9 +158,14 @@ Hosts have also been grouped into different categories, as shown.
 
 #### 3.3.2 Verify inventory and hosts
 
-`ansible-inventory --graph` can be used to show the current inventory. 
-
-Use `ansible all -m ping` to confirm connectivity.
+To show the current inventory in a nice way:
+```
+ansible-inventory --graph
+``` 
+Confirm connectivity:
+```
+ansible all -m ping
+```
 
 ### 3.4 Playbooks
 Playbooks are structured instruction files written in YAML that tell Ansible which hosts to target and what tasks to perform on them.
@@ -150,7 +173,10 @@ For the very first playbook, I'll begin with something simple, the Ansible equiv
 
 #### 3.4.1 **Create a playbook** <br>
 
-Create a new file in the *playbooks* directory and edit it: `vi /opt/ansible/playbooks/dnf_update.yml`
+Create a new file in the *playbooks* directory and edit it: 
+```
+vi /opt/ansible/playbooks/dnf_update.yml
+```
 
 ```yaml
 ---
@@ -177,7 +203,10 @@ The dnf module is found in the Ansible builtin namespace, and the documentation 
 
 Make sure the other VMs are turned on.
 
-Run the playbook with the following command: `ansible-playbook ./playbooks/update_dnf.yml --ask-pass --ask-become-pass -i ./inventory/hosts.ini`
+Run the playbook with the following command: 
+```
+ansible-playbook ./playbooks/update_dnf.yml --ask-pass --ask-become-pass -i ./inventory/hosts.ini
+```
 
 ### 3.5 ansible.cfg
 
@@ -185,13 +214,21 @@ The current ansible-playbook command is quite long. It can be shortened consider
 
 #### 3.5.1 **Reading the right configuration file** <br>
 
-First, make sure the right config-file is used with `ansible --version`
+First, make sure the right config-file is used with:
+```
+ansible --version
+```
+This will likely point towards */etc/ansible/ansible.cfg*. We want to change this to */opt/ansible/ansible.cfg*.
 
-I want to change *config file = /etc/ansible/ansible.cfg* to *config file = /opt/ansible/ansible.cfg*.
+This can be done by first changing the environment variable: 
+```
+export ANSIBLE_CONFIG=/opt/ansible/ansible.cfg
+```
 
-This can be done by changing the environment variable: `export ANSIBLE_CONFIG=/opt/ansible/ansible.cfg`
-
-Make it permanent by adding the command to a new profile script: `sudo vi /etc/profile.d/ansible.sh`
+Then, make it permanent by adding the command to a new profile script: 
+```
+sudo vi /etc/profile.d/ansible.sh
+```
 
 #### 3.5.2 **Write an ansible.cfg file** <br>
 
@@ -219,10 +256,19 @@ Ansible uses SSH to communicate, and SSH-keys will make this communication easie
 
 #### 3.6.1 **Generate Keys** <br>
 
-To generate new SSH keys, use: `ssh-keygen`
+To generate new SSH keys, use: 
+```
+ssh-keygen
+```
 
-Then copy the public key to the other VMs: `ssh-copy-id -i ~/.ssh/id_ed25519.pub rusername@hostname` <br>
-`scp /home/username/.ssh/id_ed25519.pub username@hostname:/home/username/.ssh/`
+Then copy the public key to the other VMs: 
+```
+ssh-copy-id -i ~/.ssh/id_ed25519.pub username@hostname
+```
+
+```
+scp /home/username/.ssh/id_ed25519.pub username@hostname:/home/username/.ssh/
+```
 
 #### 3.6.2 **Change SSHD settings** <br>
 
@@ -230,9 +276,15 @@ Log into each VM and make the following changes in */etc/ssh/sshd_config*: <br>
 Set *PubkeyAuthentication* to yes. <br>
 Set *PasswordAuthentication* to no. <br>
 
-Restart sshd after making changes: `sudo systemctl restart sshd` <br>
+Restart sshd after making changes: 
+```
+sudo systemctl restart sshd
+```
 
-Verify connections with: `ansible all -m ping`
+Verify connections with: 
+```
+ansible all -m ping
+```
 
 ### 3.7 Restricting SSH communication
 
