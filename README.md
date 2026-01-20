@@ -286,6 +286,20 @@ Verify connections with:
 ansible all -m ping
 ```
 
+#### 3.6.3 Skip writing passphrases
+
+Passphrases are recommended to add when creating new SSH keys. However, Ansible will prompt you every time you run a playbook, for every VM. This can be skipped, by writing the passphrase only once each session.
+
+start SSH-agent: 
+```
+eval "$(ssh-agent -s)"
+```
+
+Add private key:
+```
+ssh-add ~/.ssh/id_ed25519
+```
+
 ### 3.7 Restricting SSH communication
 
 The *mgmt-01* VM should be able to access the other VMs via SSH. This fits the role of the management VM, it should be able to manage other hosts remotely. It is also necessary for Ansible to function. However, we want to restrict SSH communication for the other VMs. For example, *app-01* shouldn't be able to SSH into *mgmt-01*. 
