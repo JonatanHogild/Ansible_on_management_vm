@@ -6,7 +6,7 @@
 
 
 <br>**Authors:** _<a href="https://github.com/Filipanderssondev">Filip Andersson</a> and <a href="https://github.com/JonatanHogild">Jonatan Högild</a>_<br>
-30-12-2025<br>
+22-01-2025<br>
 
 <br>
 
@@ -298,6 +298,11 @@ eval "$(ssh-agent -s)"
 Add private key:
 ```
 ssh-add ~/.ssh/id_ed25519
+```
+
+We can also execute these two commands automatically every login by adding them to our ansible profile-script:
+```
+sudo vi /etc/profile.d/ansible.sh
 ```
 
 ### 3.7 Restricting SSH communication
