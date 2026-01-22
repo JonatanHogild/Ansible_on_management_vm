@@ -6,7 +6,7 @@
 
 
 <br>**Authors:** _<a href="https://github.com/Filipanderssondev">Filip Andersson</a> and <a href="https://github.com/JonatanHogild">Jonatan Högild</a>_<br>
-22-01-2026<br>
+27-01-2026<br>
 
 <br>
 
@@ -372,5 +372,5 @@ We would like to thank <a href=https://github.com/rafaelurrutiasilva>Rafael Urru
 - [Proxmox firewall standard ip sets](https://pve.proxmox.com/pve-docs/chapter-pve-firewall.html#_standard_ip_set_span_class_monospaced_management_span)
 
 ## Conclusion
-Previously, I've been using scripting as a means of automation, with languages such as Bash, Python and Perl. Ansible has given me a new perspective on automation, while also being fairly easy to learn. Though this project only scratches the surface of Ansible and its capabilities, it shows how automation can be applied in complex enterprise environments, and the benefits of infrastructure as code. 
+Ansible has given us a new perspective on automation, while also being fairly easy to learn. Though this project only scratches the surface of Ansible and its capabilities, it shows how automation can be applied in complex enterprise environments, and the benefits of infrastructure as code.
 
