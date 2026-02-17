@@ -30,6 +30,7 @@ Setting up Ansible on a management VM to manage other VMs in a virtual IT-enviro
       10.7 [Restricting SSH communication](#107-restricting-ssh-communication) <br>
 11. [Conclusion](#conclusion)
 12. [References](#references)
+    12.1 [Other projects in our virtual IT-enviroment](#other-projects-in-our-virtual-it-enviroment)
 
 ## Introduction
 **Welcome!** <br>
@@ -365,9 +366,11 @@ Ansible has given us a new perspective on automation, while also being fairly ea
 
 ## References
 - [SMHI](https://www.smhi.se/en/about-smhi)
-- [Project 1: Installing Proxmox on an Asus PN64](https://github.com/rafaelurrutiasilva/Proxmox_on_Nuc)
-- [Project 2: Rocky Linux Golden Image](https://github.com/Filipanderssondev/Rocky_Linux_OS_Base_for_VMs)
 - [Ansible builtin dnf module](https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/dnf_module.html)
 - [Proxmox firewall standard ip sets](https://pve.proxmox.com/pve-docs/chapter-pve-firewall.html#_standard_ip_set_span_class_monospaced_management_span)
 
+### Other projects in our virtual IT-enviroment:
+- Project 2 - [Rocky Linux golden image for cloning](https://github.com/Filipanderssondev/Rocky_Linux_OS_Base_for_VMs)<br>
+- Project 4 - [Container stack deployment and monitoring with ansible](https://github.com/Filipanderssondev/Container_Stack_Deployment_With_Ansible)
+- Project 5 - [FreeIPA for Virtual Enviroment](https://github.com/JonatanHogild/FreeIPA_for_virtual_environment/)
 
