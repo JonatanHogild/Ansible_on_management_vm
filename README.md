@@ -1,13 +1,11 @@
 # Ansible on management VM
 
 ![](https://github.com/JonatanHogild/Ansible_on_management_vm/blob/main/Extra/ansible-on-management-vm.png) <br>
-<img width="400" alt="" src="[https://github.com/JonatanHogild/Ansible_on_management_vm/blob/main/Extra/ahbxqg.jpg](https://github.com/JonatanHogild/Ansible_on_management_vm/blob/main/Extra/ahbxqg.jpg)" allign=left><br>
-
-<br>**Authors:** <br>
+<img width="400" alt="" src="[https://github.com/JonatanHogild/Ansible_on_management_vm/blob/main/Extra/ahbxqg.jpg](https://github.com/JonatanHogild/Ansible_on_management_vm/blob/main/Extra/ahbxqg.jpg)" allign=left> <br>
+**Ansible on management VM** <br>
+**Authors:** <br>
 _<a href="https://github.com/Filipanderssondev">Filip Andersson</a> and <a href="https://github.com/JonatanHogild">Jonatan Högild</a>_ <br>
 27-01-2026<br>
-
-<br>
 
 ## Abstract
 Setting up Ansible on a management VM to manage other VMs in a virtual IT-environment. 
@@ -23,22 +21,20 @@ Setting up Ansible on a management VM to manage other VMs in a virtual IT-enviro
 8. [Environment](#environment)
 9. [Acknowledgments](#acknowledgments)
 10. [Implementation](#10-implementation)<br>
-   10.1 [Download Ansible](#101-download-ansible) <br>
-   10.2 [Ansible directory structure](#102-ansible-directory-structure) <br>
-   10.3 [Inventory](#103-inventory) <br>
-   10.4 [Playbooks](#104-playbooks) <br>
-   10.5 [ansible.cfg](#105-ansiblecfg) <br>
-   10.6 [SSH Keys](#106-ssh-keys) <br>
-   10.7 [Restricting SSH communication](#107-restricting-ssh-communication) <br>
-11. [References](#references)
-12. [Conclusion](#conclusion)
+      10.1 [Download Ansible](#101-download-ansible) <br>
+      10.2 [Ansible directory structure](#102-ansible-directory-structure) <br>
+      10.3 [Inventory](#103-inventory) <br>
+      10.4 [Playbooks](#104-playbooks) <br>
+      10.5 [ansible.cfg](#105-ansiblecfg) <br>
+      10.6 [SSH Keys](#106-ssh-keys) <br>
+      10.7 [Restricting SSH communication](#107-restricting-ssh-communication) <br>
+11. [Conclusion](#conclusion)
+12. [References](#references)
 
 ## Introduction
-This is the third project <a href="https://github.com/rafaelurrutiasilva/Proxmox_on_Nuc/blob/main/Extra/Mermaid/Projects.md">in a series of projects</a>, with the goal of setting up a complete virtualized, automated, and monitored IT-Enviroment as a part of our internship at [The Swedish Meteorological and Hydrological Institute (SMHI)](https://www.smhi.se/en/about-smhi). Previously, <a href=https://github.com/rafaelurrutiasilva/Proxmox_on_Nuc>Proxmox was installed and configured</a> on a server, and a <a href=https://github.com/Filipanderssondev/Rocky_Linux_OS_Base_for_VMs>Rocky Linux golden image</a> was created for cloning. At this stage in the project, we have 3 VMs, one for management of the environment, one for monitoring, and one for running applications. In this project, I will begin work on the management VM by setting up Ansible, an automation IaC platform. 
+**Welcome!** <br>
+This project is about installing and configuring Ansible on a management VM to manage other VMs in a virtual IT-enviroment. This is the third project <a href="https://github.com/rafaelurrutiasilva/Proxmox_on_Nuc/blob/main/Extra/Mermaid/Projects.md">in a series of projects</a>, with the goal of setting up a complete virtualized, automated, and monitored IT-Enviroment as a part of our internship at [The Swedish Meteorological and Hydrological Institute (SMHI)](https://www.smhi.se/en/about-smhi). Previously, <a href=https://github.com/rafaelurrutiasilva/Proxmox_on_Nuc>Proxmox was installed and configured</a> on a server, and a <a href=https://github.com/Filipanderssondev/Rocky_Linux_OS_Base_for_VMs>Rocky Linux golden image</a> was created for cloning. At this stage in the project, we have 3 VMs, one for management of the environment, one for monitoring, and one for running applications. In this project, I will begin work on the management VM by setting up Ansible, an automation IaC platform. 
 
-Other projects in series:<br>
-Part 1 - [Installing Proxmox on an Asus PN64](https://github.com/rafaelurrutiasilva/Proxmox_on_Nuc/tree/main)<br>
-Part 2 - [Rocky Linux golden image for cloning](https://github.com/Filipanderssondev/Rocky_Linux_OS_Base_for_VMs)<br>
 
 ## Goals and Objectives
 This is part of a larger ongoing IT-infrastructure project that uses Proxmox as a base, with Rocky Linux as the OS running on each virtual machine.
@@ -62,11 +58,11 @@ This repo is part of a larger ongoing project.
 > This is intended for learning, testing, and experimentation. The emphasis is not on security or creating an operational environment suitable for production.
 
 ## Scope and Limitations
-- ### 7.1. Scope
+- ### Scope
    * Instructions for installing and configuring Ansible for an enterprise environment. 
    * Instructions for creating Ansible inventories and playbooks.
 
-- ### 7.2. Limitations
+- ### Limitations
    * This guide is not intended for production-grade, multi-node clusters or advanced HA setups.
    * Network configuration is for now limited to a single-node setup and may not apply to complex environments.
    * Instructions may become outdated as software updates; always verify with the official documentation.
@@ -82,9 +78,9 @@ We would like to thank <a href=https://github.com/rafaelurrutiasilva>Rafael Urru
 
 ## Implementation
 
-### 10.1. Download Ansible
+### Download Ansible
 
-#### 10.1.1 **Download Ansible and other packages** <br> 
+#### Download Ansible and other packages 
 
 Run a quick update before proceeding:
 ```
@@ -106,23 +102,25 @@ Also download *sshpass*, which allows ssh password authoirzation via Ansible:
 sudo dnf install sshpass
 ```
 
-### 10.2 Ansible directory structure
+### Ansible directory structure
 
-#### 10.2.1. Create ansible folders and files <br>
+#### Create ansible folders and files <br>
 
-/opt/ansible/ <br>
-├── ansible.cfg  <br>
-├── inventory/  <br>
-│   ├── hosts.ini <br>
-│   └── group_vars/  <br>
-│   └── host_vars/  <br>
-├── playbooks/ <br>
-└── roles/  <br>
-    └── common/  <br>
+~~~yaml
+/opt/ansible/
+├── ansible.cfg
+├── inventory/
+│   ├── hosts.ini
+│   └── group_vars/
+│   └── host_vars/
+├── playbooks/
+└── roles/
+    └── common/
+~~~
 
 This is a suggested directory structure, placed in */opt*. For a lab, it would suffice to create a single ansible folder placed in your home directory. 
 
-#### 10.2.2. Set correct permissions for the directories and files <br>
+#### Set correct permissions for the directories and files <br>
 
 Change the group ownership to wheel: 
 ```
@@ -164,11 +162,11 @@ Confirm:
 cat /etc/group | grep username
 ```
 
-### 10.3 Inventory
+### Inventory
 
 The inventory contains all the hosts that Ansible will manage. For now, I will keep it simple and add static hosts. 
 
-#### 10.3.1 **hosts.ini** <br>
+#### hosts.ini** <br>
 
 A hosts-file can either use the .ini or .yml format, use whichever you prefer. I used the .ini format.
 
@@ -194,7 +192,7 @@ Localhost is included, with its connection type specified as local. Changes made
 
 Hosts have also been grouped into different categories, as shown. 
 
-#### 10.3.2 Verify inventory and hosts
+#### Verify inventory and hosts
 
 To show the current inventory in a nice way:
 ```
@@ -205,11 +203,11 @@ Confirm connectivity:
 ansible all -m ping
 ```
 
-### 10.4 Playbooks
+### Playbooks
 Playbooks are structured instruction files written in YAML that tell Ansible which hosts to target and what tasks to perform on them.
 For the very first playbook, I'll begin with something simple, the Ansible equivelent of *sudo dnf update*.
 
-#### 10.4.1 **Create a playbook** <br>
+#### Create a playbook
 
 Create a new file in the *playbooks* directory and edit it: 
 ```
@@ -237,7 +235,7 @@ vi /opt/ansible/playbooks/dnf_update.yml
 
 The dnf module is found in the Ansible builtin namespace, and the documentation is available <a href=https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/dnf_module.html>here.</a>
 
-#### 10.4.2. **Run playbook** <br>
+#### Run playbook
 
 Make sure the other VMs are turned on.
 
@@ -246,11 +244,11 @@ Run the playbook with the following command:
 ansible-playbook ./playbooks/update_dnf.yml --ask-pass --ask-become-pass -i ./inventory/hosts.ini
 ```
 
-### 10.5 ansible.cfg
+### ansible.cfg
 
 The current ansible-playbook command is quite long. It can be shortened considerably by defining settings in the ansible.cfg file.
 
-#### 10.5.1 **Reading the right configuration file** <br>
+#### Reading the right configuration file
 
 First, make sure the right config-file is used with:
 ```
@@ -268,7 +266,7 @@ Then, make it permanent by adding the command to a new profile script:
 sudo vi /etc/profile.d/ansible.sh
 ```
 
-#### 10.5.2 **Write an ansible.cfg file** <br>
+#### Write an ansible.cfg file
 
 The ansible configuration file can be generated using the *ansible-config* command, or created manually. I prefer to do this manually.
 
@@ -288,11 +286,11 @@ become_method = sudo
 
 The configuration settings placed here should be globally applicable. Circumstantial settings are better placed in playbooks, or included at execution. 
 
-### 10.6 SSH Keys
+### SSH Keys
 
 Ansible uses SSH to communicate, and SSH-keys will make this communication easier and safer.
 
-#### 10.6.1 **Generate Keys** <br>
+#### Generate Keys
 
 To generate new SSH keys, use: 
 ```
@@ -308,7 +306,7 @@ ssh-copy-id -i ~/.ssh/id_ed25519.pub username@hostname
 scp /home/username/.ssh/id_ed25519.pub username@hostname:/home/username/.ssh/
 ```
 
-#### 10.6.2 **Change SSHD settings** <br>
+#### Change SSHD settings
 
 Log into each VM and make the following changes in */etc/ssh/sshd_config*: <br>
 Set *PubkeyAuthentication* to yes. <br>
@@ -324,7 +322,7 @@ Verify connections with:
 ansible all -m ping
 ```
 
-#### 10.6.3 Skip writing passphrases
+#### Skip writing passphrases
 
 Passphrases are recommended to add when creating new SSH keys. However, Ansible will prompt you every time you run a playbook, for every VM. This can be skipped, by writing the passphrase only once each session.
 
@@ -343,11 +341,11 @@ We can also execute these two commands automatically every login by adding them 
 sudo vi /etc/profile.d/ansible.sh
 ```
 
-### 10.7 Restricting SSH communication
+### Restricting SSH communication
 
 The *mgmt-01* VM should be able to access the other VMs via SSH. This fits the role of the management VM, it should be able to manage other hosts remotely. It is also necessary for Ansible to function. However, we want to restrict SSH communication for the other VMs. For example, *app-01* shouldn't be able to SSH into *mgmt-01*. 
 
-#### 10.7.1 Change firewall rules
+#### Change firewall rules
 
 The Proxmox firewall allows SSH communication between all VMs. This is what we will change.
 
