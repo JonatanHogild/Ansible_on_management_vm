@@ -29,7 +29,7 @@ Setting up Ansible on a management VM to manage other VMs in a virtual IT-enviro
       10.6 [SSH Keys](#106-ssh-keys) <br>
       10.7 [Restricting SSH communication](#107-restricting-ssh-communication) <br>
 11. [Conclusion](#conclusion)
-12. [References](#references)
+12. [References](#references) <br>
     12.1 [Other projects in our virtual IT-enviroment](#other-projects-in-our-virtual-it-enviroment)
 
 ## Introduction
