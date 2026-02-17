@@ -51,15 +51,12 @@ This repo is for anyone who wants a step-by-step guide on preparing Ansible for 
 This repo is also part of a larger project aimed at people interested in learning about IaC, and building such an environment from scratch.
 
 ## Document Status
-> [!NOTE]  
-> This is a work in progress.<br>
-> This repo is part of a larger ongoing project.
-<br>
+This project is completed. 
+This repo is part of a larger ongoing project.
 
 ## Disclaimer
 > [!CAUTION]
 > This is intended for learning, testing, and experimentation. The emphasis is not on security or creating an operational environment suitable for production.
-<br>
 
 ## Scope and Limitations
 - ### 7.1. Scope
