@@ -14,25 +14,25 @@
 Setting up Ansible on a management VM to manage other VMs in a virtual IT-environment. 
 
 ## Table of Contents
-
 1. [Introduction](#introduction)
 2. [Goals and Objectives](#goals-and-objectives)
-3. [Method](#method) <br>
-   3.1 [Download Ansible](#31-download-ansible) <br>
-   3.2 [Ansible directory structure](#32-ansible-directory-structure) <br>
-   3.3 [Inventory](#33-inventory) <br>
-   3.4 [Playbooks](#34-playbooks) <br>
-   3.5 [ansible.cfg](#35-ansiblecfg) <br>
-   3.6 [SSH Keys](#36-ssh-keys) <br>
-   3.7 [Restricting SSH communication](#37-restricting-ssh-communication) <br>
+3. [Method](#method)
 4. [Target Audience](#target-audience)
 5. [Document Status](#document-status)
 6. [Disclaimer](#disclaimer)
 7. [Scope and Limitations](#scope-and-limitations)
 8. [Environment](#environment)
 9. [Acknowledgments](#acknowledgments)
-10. [References](#references)
-11. [Conclusion](#conclusion)
+10. [Implementation](#10-implementation)<br>
+   10.1 [Download Ansible](#101-download-ansible) <br>
+   10.2 [Ansible directory structure](#102-ansible-directory-structure) <br>
+   10.3 [Inventory](#103-inventory) <br>
+   10.4 [Playbooks](#104-playbooks) <br>
+   10.5 [ansible.cfg](#105-ansiblecfg) <br>
+   10.6 [SSH Keys](#106-ssh-keys) <br>
+   10.7 [Restricting SSH communication](#107-restricting-ssh-communication) <br>
+11. [References](#references)
+12. [Conclusion](#conclusion)
 
 ## Introduction
 This is the third project <a href="https://github.com/rafaelurrutiasilva/Proxmox_on_Nuc/blob/main/Extra/Mermaid/Projects.md">in a series of projects</a>, with the goal of setting up a complete virtualized, automated, and monitored IT-Enviroment as a part of our internship at [The Swedish Meteorological and Hydrological Institute (SMHI)](https://www.smhi.se/en/about-smhi). Previously, <a href=https://github.com/rafaelurrutiasilva/Proxmox_on_Nuc>Proxmox was installed and configured</a> on a server, and a <a href=https://github.com/Filipanderssondev/Rocky_Linux_OS_Base_for_VMs>Rocky Linux golden image</a> was created for cloning. At this stage in the project, we have 3 VMs, one for management of the environment, one for monitoring, and one for running applications. In this project, I will begin work on the management VM by setting up Ansible, an automation IaC platform. 
@@ -44,9 +44,47 @@ The goal of this project is to build a complete IT-environment and gain a deeper
 With Ansible, we can automate just about anything. The goal of this project is to set up Ansible in a scalable and secure way. Ansible will handle the bulk of management in our environment and it should work as efficiently iregardless of the amount of hosts. 
 
 ## Method
-### 3.1. Download Ansible
+In this project, we will install Ansible on a management system and create a scalable directory structure for it. A hosts.ini file will be created, where we define which hosts Ansible will work with. A playbook will be written, which will allow us to update all software sources on a range of hosts. We will then create a new ansible configuration file, and define settings that can be applied on all running playbooks. Finally, we will set up SSH keys in order to run Ansible with public key authentication. 
 
-#### 3.1.1 **Download Ansible and other packages** <br> 
+## Target Audience
+This repo is for anyone who wants a step-by-step guide on preparing Ansible for management of multiple hosts.
+This repo is also part of a larger project aimed at people interested in learning about IaC, and building such an environment from scratch.
+
+## Document Status
+> [!NOTE]  
+> This is a work in progress.<br>
+> This repo is part of a larger ongoing project.
+<br>
+
+## Disclaimer
+> [!CAUTION]
+> This is intended for learning, testing, and experimentation. The emphasis is not on security or creating an operational environment suitable for production.
+<br>
+
+## Scope and Limitations
+- ### 7.1. Scope
+   * Instructions for installing and configuring Ansible for an enterprise environment. 
+   * Instructions for creating Ansible inventories and playbooks.
+
+- ### 7.2. Limitations
+   * This guide is not intended for production-grade, multi-node clusters or advanced HA setups.
+   * Network configuration is for now limited to a single-node setup and may not apply to complex environments.
+   * Instructions may become outdated as software updates; always verify with the official documentation.
+<br>
+
+## Environment
+- Proxmox VE (9.1.1)
+- Rocky Linux (10.1)
+- Ansible (core 2.16.14)
+
+## Acknowledgments
+We would like to thank <a href=https://github.com/rafaelurrutiasilva>Rafael Urrutia</a> for his continuous support and guidance. 
+
+## Implementation
+
+### 10.1. Download Ansible
+
+#### 10.1.1 **Download Ansible and other packages** <br> 
 
 Run a quick update before proceeding:
 ```
@@ -68,9 +106,9 @@ Also download *sshpass*, which allows ssh password authoirzation via Ansible:
 sudo dnf install sshpass
 ```
 
-### 3.2 Ansible directory structure
+### 10.2 Ansible directory structure
 
-#### 3.2.1. Create ansible folders and files <br>
+#### 10.2.1. Create ansible folders and files <br>
 
 /opt/ansible/ <br>
 ├── ansible.cfg  <br>
@@ -84,7 +122,7 @@ sudo dnf install sshpass
 
 This is a suggested directory structure, placed in */opt*. For a lab, it would suffice to create a single ansible folder placed in your home directory. 
 
-#### 3.2.2. Set correct permissions for the directories and files <br>
+#### 10.2.2. Set correct permissions for the directories and files <br>
 
 Change the group ownership to wheel: 
 ```
@@ -126,11 +164,11 @@ Confirm:
 cat /etc/group | grep username
 ```
 
-### 3.3 Inventory
+### 10.3 Inventory
 
 The inventory contains all the hosts that Ansible will manage. For now, I will keep it simple and add static hosts. 
 
-#### 3.3.1 **hosts.ini** <br>
+#### 10.3.1 **hosts.ini** <br>
 
 A hosts-file can either use the .ini or .yml format, use whichever you prefer. I used the .ini format.
 
@@ -156,7 +194,7 @@ Localhost is included, with its connection type specified as local. Changes made
 
 Hosts have also been grouped into different categories, as shown. 
 
-#### 3.3.2 Verify inventory and hosts
+#### 10.3.2 Verify inventory and hosts
 
 To show the current inventory in a nice way:
 ```
@@ -167,11 +205,11 @@ Confirm connectivity:
 ansible all -m ping
 ```
 
-### 3.4 Playbooks
+### 10.4 Playbooks
 Playbooks are structured instruction files written in YAML that tell Ansible which hosts to target and what tasks to perform on them.
 For the very first playbook, I'll begin with something simple, the Ansible equivelent of *sudo dnf update*.
 
-#### 3.4.1 **Create a playbook** <br>
+#### 10.4.1 **Create a playbook** <br>
 
 Create a new file in the *playbooks* directory and edit it: 
 ```
@@ -199,7 +237,7 @@ vi /opt/ansible/playbooks/dnf_update.yml
 
 The dnf module is found in the Ansible builtin namespace, and the documentation is available <a href=https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/dnf_module.html>here.</a>
 
-#### 3.4.2. **Run playbook** <br>
+#### 10.4.2. **Run playbook** <br>
 
 Make sure the other VMs are turned on.
 
@@ -208,11 +246,11 @@ Run the playbook with the following command:
 ansible-playbook ./playbooks/update_dnf.yml --ask-pass --ask-become-pass -i ./inventory/hosts.ini
 ```
 
-### 3.5 ansible.cfg
+### 10.5 ansible.cfg
 
 The current ansible-playbook command is quite long. It can be shortened considerably by defining settings in the ansible.cfg file.
 
-#### 3.5.1 **Reading the right configuration file** <br>
+#### 10.5.1 **Reading the right configuration file** <br>
 
 First, make sure the right config-file is used with:
 ```
@@ -230,7 +268,7 @@ Then, make it permanent by adding the command to a new profile script:
 sudo vi /etc/profile.d/ansible.sh
 ```
 
-#### 3.5.2 **Write an ansible.cfg file** <br>
+#### 10.5.2 **Write an ansible.cfg file** <br>
 
 The ansible configuration file can be generated using the *ansible-config* command, or created manually. I prefer to do this manually.
 
@@ -250,11 +288,11 @@ become_method = sudo
 
 The configuration settings placed here should be globally applicable. Circumstantial settings are better placed in playbooks, or included at execution. 
 
-### 3.6 SSH Keys
+### 10.6 SSH Keys
 
 Ansible uses SSH to communicate, and SSH-keys will make this communication easier and safer.
 
-#### 3.6.1 **Generate Keys** <br>
+#### 10.6.1 **Generate Keys** <br>
 
 To generate new SSH keys, use: 
 ```
@@ -270,7 +308,7 @@ ssh-copy-id -i ~/.ssh/id_ed25519.pub username@hostname
 scp /home/username/.ssh/id_ed25519.pub username@hostname:/home/username/.ssh/
 ```
 
-#### 3.6.2 **Change SSHD settings** <br>
+#### 10.6.2 **Change SSHD settings** <br>
 
 Log into each VM and make the following changes in */etc/ssh/sshd_config*: <br>
 Set *PubkeyAuthentication* to yes. <br>
@@ -286,7 +324,7 @@ Verify connections with:
 ansible all -m ping
 ```
 
-#### 3.6.3 Skip writing passphrases
+#### 10.6.3 Skip writing passphrases
 
 Passphrases are recommended to add when creating new SSH keys. However, Ansible will prompt you every time you run a playbook, for every VM. This can be skipped, by writing the passphrase only once each session.
 
@@ -305,11 +343,11 @@ We can also execute these two commands automatically every login by adding them 
 sudo vi /etc/profile.d/ansible.sh
 ```
 
-### 3.7 Restricting SSH communication
+### 10.7 Restricting SSH communication
 
 The *mgmt-01* VM should be able to access the other VMs via SSH. This fits the role of the management VM, it should be able to manage other hosts remotely. It is also necessary for Ansible to function. However, we want to restrict SSH communication for the other VMs. For example, *app-01* shouldn't be able to SSH into *mgmt-01*. 
 
-#### 3.7.1 Change firewall rules
+#### 10.7.1 Change firewall rules
 
 The Proxmox firewall allows SSH communication between all VMs. This is what we will change.
 
@@ -324,45 +362,8 @@ Next, go to Datacenter > Firewall > Security Group > *allow-ssh* <br>
 Here are the two SSH rules created in the previous project. <br>
 Edit each of these, and set *mgmt* as source. <br>
 
-
-## Target Audience
-This repo is for anyone who wants a step-by-step guide on preparing Ansible for management of multiple hosts.
-This repo is also part of a larger project aimed at people interested in learning about IaC, and building such an environment from scratch.
-
-## Document Status
-> [!NOTE]  
-> This is a work in progress.<br>
-> This repo is part of a larger ongoing project.
-<br>
-
-## Disclaimer
-> [!CAUTION]
-> This is intended for learning, testing, and experimentation. The emphasis is not on security or creating an operational environment suitable for production.
-<br>
-
-## Scope and Limitations
-- ### 7.1. Scope
-   * Instructions for installing and configuring Ansible for an enterprise environment. 
-   * Instructions for creating Ansible inventories and playbooks.
-
-- ### 7.2. Limitations
-   * This guide is not intended for production-grade, multi-node clusters or advanced HA setups.
-   * Network configuration is for now limited to a single-node setup and may not apply to complex environments.
-   * Instructions may become outdated as software updates; always verify with the official documentation.
-<br>
-
-## Environment
-- ### 8.1. Hardware
-   - Asus PN64 ax210NGW
-
-- ### 8.2. Software
-   - Proxmox VE (9.1.1)
-   - Rocky Linux (10.1)
-   - Ansible (core 2.16.14)
-<br>
-
-## Acknowledgments
-We would like to thank <a href=https://github.com/rafaelurrutiasilva>Rafael Urrutia</a> for his continuous support and guidance. 
+## Conclusion
+Ansible has given us a new perspective on automation, while also being fairly easy to learn. Previously, we've done automation through scripting, and while that is still viable in many cases, it also becomes unwieldy in larger environments and when configuring multiple systems. Though this project only covers the basics of Ansible, it's enough to show how automation can be applied in complex enterprise environments, and the benefits of infrastructure as code. 
 
 ## References
 - [SMHI](https://www.smhi.se/en/about-smhi)
@@ -371,6 +372,4 @@ We would like to thank <a href=https://github.com/rafaelurrutiasilva>Rafael Urru
 - [Ansible builtin dnf module](https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/dnf_module.html)
 - [Proxmox firewall standard ip sets](https://pve.proxmox.com/pve-docs/chapter-pve-firewall.html#_standard_ip_set_span_class_monospaced_management_span)
 
-## Conclusion
-Ansible has given us a new perspective on automation, while also being fairly easy to learn. Though this project only scratches the surface of Ansible and its capabilities, it shows how automation can be applied in complex enterprise environments, and the benefits of infrastructure as code.
 
