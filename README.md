@@ -39,10 +39,7 @@ This project is about installing and configuring Ansible on a management VM to m
 _[Other projects in our virtual IT-enviroment](#other-projects-in-our-virtual-it-enviroment)_
 
 ## Goals and Objectives
-This is part of a larger ongoing IT-infrastructure project that uses Proxmox as a base, with Rocky Linux as the OS running on each virtual machine.
-The goal of this project is to build a complete IT-environment and gain a deeper understanding of the underlying components and their part in a larger production chain.
-
-With Ansible, we can automate just about anything. The goal of this project is to set up Ansible in a scalable and secure way. Ansible will handle the bulk of management in our environment and it should work as efficiently iregardless of the amount of hosts. 
+The goal of this project is to set up Ansible in a scalable and secure way. Ansible will handle the bulk of management in our environment and it should work as efficiently iregardless of the amount of hosts. 
 
 ## Method
 In this project we will install Ansible on a management system and create a scalable directory structure for it. A hosts.ini file will be created, where we define which hosts Ansible will work with. A playbook will be written, which will allow us to update all software sources on a range of hosts. We will then create a new ansible configuration file, and define settings that can be applied on all running playbooks. Finally, we will set up SSH keys in order to run Ansible with public key authentication. 
