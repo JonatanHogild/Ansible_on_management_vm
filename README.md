@@ -207,7 +207,7 @@ ansible all -m ping
 
 ### Playbooks
 Playbooks are structured instruction files written in YAML that tell Ansible which hosts to target and what tasks to perform on them.
-For the very first playbook, I'll begin with something simple, the Ansible equivelent of *sudo dnf update*.
+For the very first playbook, we'll begin with something simple, the Ansible equivelent of *sudo dnf update*.
 
 #### Create a playbook
 
@@ -363,7 +363,7 @@ Here are the two SSH rules created in the previous project. <br>
 Edit each of these, and set *mgmt* as source. <br>
 
 ## Conclusion
-Ansible has given us a new perspective on automation, while also being fairly easy to learn. Previously, we've done automation through scripting, and while that is still viable in many cases, it also becomes unwieldy in larger environments and when configuring multiple systems. Though this project only covers the basics of Ansible, it's enough to show how automation can be applied in complex enterprise environments, and the benefits of infrastructure as code. 
+Ansible has given us a new perspective on automation, while also being fairly easy to learn. Previously, we've done automation through scripting, and while that is still viable in many cases, it also becomes unwieldy in larger environments and when configuring multiple systems. Though this project only covers the basics of Ansible, it's enough to show the benefits of infrastructure as code. 
 
 ## References
 - [SMHI](https://www.smhi.se/en/about-smhi)
