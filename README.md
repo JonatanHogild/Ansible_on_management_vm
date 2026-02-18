@@ -20,21 +20,21 @@ Setting up Ansible on a management VM to manage other VMs in a virtual IT-enviro
 7. [Scope and Limitations](#scope-and-limitations)
 8. [Environment](#environment)
 9. [Acknowledgments](#acknowledgments)
-10. [Implementation](#10-implementation)<br>
-      10.1 [Download Ansible](#101-download-ansible) <br>
-      10.2 [Ansible directory structure](#102-ansible-directory-structure) <br>
-      10.3 [Inventory](#103-inventory) <br>
-      10.4 [Playbooks](#104-playbooks) <br>
-      10.5 [ansible.cfg](#105-ansiblecfg) <br>
-      10.6 [SSH Keys](#106-ssh-keys) <br>
-      10.7 [Restricting SSH communication](#107-restricting-ssh-communication) <br>
+10. [Implementation](#implementation)<br>
+      10.1 [Download Ansible](#download-ansible) <br>
+      10.2 [Ansible directory structure](#ansible-directory-structure) <br>
+      10.3 [Inventory](#inventory) <br>
+      10.4 [Playbooks](#playbooks) <br>
+      10.5 [ansible.cfg](#ansiblecfg) <br>
+      10.6 [SSH Keys](#ssh-keys) <br>
+      10.7 [Restricting SSH communication](#restricting-ssh-communication) <br>
 11. [Conclusion](#conclusion)
 12. [References](#references) <br>
     12.1 [Other projects in our virtual IT-enviroment](#other-projects-in-our-virtual-it-enviroment)
 
 ## Introduction
 **Welcome!** <br>
-_This project is about installing and configuring Ansible on a management VM to manage other VMs in a virtual IT-enviroment. This is the third project <a href="https://github.com/rafaelurrutiasilva/Proxmox_on_Nuc/blob/main/Extra/Mermaid/Projects.md">in a series of projects</a>, with the goal of setting up a complete virtualized, automated, and monitored IT-Enviroment as a part of our internship at [The Swedish Meteorological and Hydrological Institute (SMHI)](https://www.smhi.se/en/about-smhi). Previously, <a href=https://github.com/rafaelurrutiasilva/Proxmox_on_Nuc>Proxmox was installed and configured</a> on a server, and a <a href=https://github.com/Filipanderssondev/Rocky_Linux_OS_Base_for_VMs>Rocky Linux golden image</a> was created for cloning. At this stage in the project, we have 3 VMs, one for management of the environment, one for monitoring, and one for running applications. In this project, I will begin work on the management VM by setting up Ansible, an automation IaC platform._ 
+This project is about installing and configuring Ansible on a management VM to manage other VMs in a virtual IT-enviroment. This is the third project <a href="https://github.com/rafaelurrutiasilva/Proxmox_on_Nuc/blob/main/Extra/Mermaid/Projects.md">in a series of projects</a>, with the goal of setting up a complete virtualized, automated, and monitored IT-Enviroment as a part of our internship at [The Swedish Meteorological and Hydrological Institute (SMHI)](https://www.smhi.se/en/about-smhi). Previously, <a href=https://github.com/rafaelurrutiasilva/Proxmox_on_Nuc>Proxmox was installed and configured</a> on a server, and a <a href=https://github.com/Filipanderssondev/Rocky_Linux_OS_Base_for_VMs>Rocky Linux golden image</a> was created for cloning. At this stage in the project, we have 3 VMs, one for management of the environment, one for monitoring, and one for running applications. In this project, I will begin work on the management VM by setting up Ansible, an automation IaC platform.
 
 _[Other projects in our virtual IT-enviroment](#other-projects-in-our-virtual-it-enviroment)_
 
@@ -45,11 +45,11 @@ The goal of this project is to build a complete IT-environment and gain a deeper
 With Ansible, we can automate just about anything. The goal of this project is to set up Ansible in a scalable and secure way. Ansible will handle the bulk of management in our environment and it should work as efficiently iregardless of the amount of hosts. 
 
 ## Method
-In this project, we will install Ansible on a management system and create a scalable directory structure for it. A hosts.ini file will be created, where we define which hosts Ansible will work with. A playbook will be written, which will allow us to update all software sources on a range of hosts. We will then create a new ansible configuration file, and define settings that can be applied on all running playbooks. Finally, we will set up SSH keys in order to run Ansible with public key authentication. 
+In this project we will install Ansible on a management system and create a scalable directory structure for it. A hosts.ini file will be created, where we define which hosts Ansible will work with. A playbook will be written, which will allow us to update all software sources on a range of hosts. We will then create a new ansible configuration file, and define settings that can be applied on all running playbooks. Finally, we will set up SSH keys in order to run Ansible with public key authentication. 
 
 ## Target Audience
 This repo is for anyone who wants a step-by-step guide on preparing Ansible for management of multiple hosts.
-This repo is also part of a larger project aimed at people interested in learning about IaC, and building such an environment from scratch.
+This repo is also part of a larger project aimed at people interested in learning about IT-infrastructure, and building such an environment from scratch.
 
 ## Document Status
 This project is completed. 
