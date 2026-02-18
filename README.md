@@ -49,28 +49,31 @@ This repo is for anyone who wants a step-by-step guide on preparing Ansible for 
 This repo is also part of a larger project aimed at people interested in learning about IT-infrastructure, and building such an environment from scratch.
 
 ## Document Status
-This project is completed. 
-This repo is part of a larger ongoing project.
+> [!NOTE]
+> This repo is completed.
+> This repo is part of a larger ongoing project.
 
 ## Disclaimer
 > [!CAUTION]
 > This is intended for learning, testing, and experimentation. The emphasis is not on security or creating an operational environment suitable for production.
 
 ## Scope and Limitations
-- ### Scope
-   * Instructions for installing and configuring Ansible for an enterprise environment. 
-   * Instructions for creating Ansible inventories and playbooks.
+* Instructions for installing and configuring Ansible for an enterprise environment. 
+* Instructions for creating Ansible inventories and playbooks.
 
-- ### Limitations
-   * This guide is not intended for production-grade, multi-node clusters or advanced HA setups.
-   * Network configuration is for now limited to a single-node setup and may not apply to complex environments.
-   * Instructions may become outdated as software updates; always verify with the official documentation.
-<br>
+* This guide is not intended for production-grade, multi-node clusters or advanced HA setups.
+* Hardware compatibility varies; If unsure, check hardware requirements before proceeding.
+* Instructions may become outdated as software updates; always verify with the official documentation.
+* Sensetive information will be withheld. This will not hinder participation in the guide.
 
 ## Environment
-- Proxmox VE (9.1.1)
-- Rocky Linux (10.1)
-- Ansible (core 2.16.14)
+ - Asus PN64 ax210NGW
+   - Intel® Core™ i7-12700H 
+   - 1TB disk
+   - 64 GB memory
+ - Proxmox VE (9.1.1)
+ - Rocky Linux (10.1)
+ - Ansible (core 2.16.14)
 
 ## Acknowledgments
 We would like to thank <a href=https://github.com/rafaelurrutiasilva>Rafael Urrutia</a> for his continuous support and guidance. 
