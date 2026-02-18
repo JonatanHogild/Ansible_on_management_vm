@@ -273,7 +273,7 @@ sudo vi /etc/profile.d/ansible.sh
 The ansible configuration file can be generated using the *ansible-config* command, or created manually. I prefer to do this manually.
 
 Here's what a configuration may look like:
-<pre>
+```ini
 [defaults]
 inventory = /opt/ansible/inventory/hosts.ini #inventory/hosts path
 gather_facts = True #collect information about remote systems
@@ -284,7 +284,7 @@ stdout_callback = yaml #output format set to yaml
 [privilege_escalation]
 become = True #privilege escalation by default
 become_method = sudo
-</pre>
+```
 
 The configuration settings placed here should be globally applicable. Circumstantial settings are better placed in playbooks, or included at execution. 
 
