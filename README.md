@@ -167,9 +167,9 @@ cat /etc/group | grep username
 
 The inventory contains all the hosts that Ansible will manage. For now, I will keep it simple and add static hosts. 
 
-#### hosts.ini** <br>
+#### hosts.ini <br>
 
-A hosts-file can either use the .ini or .yml format, use whichever you prefer. I used the .ini format.
+A hosts-file can either use the .ini or .yml format, use whichever you prefer. We used the .ini format.
 
 Edit the */inventory/hosts.ini* file: <br>
 
