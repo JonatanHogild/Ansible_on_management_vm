@@ -23,9 +23,9 @@ Setting up Ansible on a management VM to manage other VMs in a virtual IT-enviro
       <br>
     <strong>Ansible on management VM</strong> <br>
     <strong>Authors:</strong>
-    <i><a href="https://github.com/Filipanderssondev">Filip Andersson</a></i>
-    and
     <i><a href="https://github.com/JonatanHogild">Jonatan Högild</a></i>
+    and
+	<i><a href="https://github.com/Filipanderssondev">Filip Andersson</a></i>
     <br>
     01-27-2026
     <br clear="left"/>
