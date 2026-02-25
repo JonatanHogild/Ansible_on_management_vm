@@ -1,5 +1,5 @@
 # Ansible on management VM
-
+<!--
 ![](https://github.com/JonatanHogild/Ansible_on_management_vm/blob/main/Extra/ansible-on-management-vm.png) <br>
 <img width="400" alt="" src="[https://github.com/JonatanHogild/Ansible_on_management_vm/blob/main/Extra/ahbxqg.jpg](https://github.com/JonatanHogild/Ansible_on_management_vm/blob/main/Extra/ahbxqg.jpg)" allign=left> <br>
 **Ansible on management VM** <br>
@@ -9,6 +9,29 @@ _<a href="https://github.com/Filipanderssondev">Filip Andersson</a> and <a href=
 
 ## Abstract
 Setting up Ansible on a management VM to manage other VMs in a virtual IT-environment. 
+-->
+
+<div>
+  <img src="https://github.com/JonatanHogild/Ansible_on_management_vm/blob/main/Extra/ansible-on-management-vm.png" width="300" align="left" />
+  <h2>Abstract</h2>
+  <p> 
+	Setting up Ansible on a management VM to manage other VMs in a virtual IT-environment. <br>
+	<br>
+	<br>
+	<br>
+	<br>
+      <br>
+    <strong>Ansible on management VM</strong> <br>
+    <strong>Authors:</strong>
+    <i><a href="https://github.com/Filipanderssondev">Filip Andersson</a></i>
+    and
+    <i><a href="https://github.com/JonatanHogild">Jonatan Högild</a></i>
+    <br>
+    01-27-2026
+    <br clear="left"/>
+  </p>
+</div>
+<br>
 
 ## Table of Contents
 1. [Introduction](#introduction)
