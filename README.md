@@ -15,12 +15,13 @@ Setting up Ansible on a management VM to manage other VMs in a virtual IT-enviro
   <img src="https://github.com/JonatanHogild/Ansible_on_management_vm/blob/main/Extra/ansible-on-management-vm.png" width="300" align="left" />
   <h2>Abstract</h2>
   <p> 
-	Setting up Ansible on a management VM to manage other VMs in a virtual IT-environment. <br>
+	This project is about setting up Ansible on a management VM to manage other VMs in a virtual IT-environment. We'll cover the basics of Ansible, such as inventory and hosts, playbooks, ansible configuration and SSH management. 
 	<br>
 	<br>
 	<br>
 	<br>
-      <br>
+	<br>
+    <br>
     <strong>Ansible on management VM</strong> <br>
     <strong>Authors:</strong>
     <i><a href="https://github.com/JonatanHogild">Jonatan Högild</a></i>
